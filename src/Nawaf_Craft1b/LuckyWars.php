@@ -12,8 +12,14 @@ use MiniGamesTree\PlayerSettings\PlayerAPI as GamesAPI;
 
 class LuckyWars extends PluginBase implements Listener{
   
-  public function getGamesAPI(){
+  public function getGameAPI(){
   return GamesAPI::getInstance();
+  }
+  
+  public function onInteract(PlayerInteractEvent $event){
+  if($this->getGameAPI()->getModeAPI()->isStop() || $this->getGameAPI()->getModeAPI()->isWiting()){
+  $this->getGameAPI()->getPlayerAPI()->addPlayerInGame($this->getGameAPI()->getPlayerAPI()->getLastPlayerNumber(),$event->getPlayer());
+  }
   }
   
   public function onEnable(){
